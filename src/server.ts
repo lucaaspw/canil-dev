@@ -3,6 +3,8 @@ import dotenv from "dotenv";
 import mustache from "mustache-express";
 import path from "path";
 
+import mainRoutes from "./routes";
+
 dotenv.config();
 
 const server = express();
@@ -14,5 +16,9 @@ server.engine("mustache", mustache());
 server.use(express.static(path.join(__dirname, "../public")));
 
 // Routes
+server.use(mainRoutes);
+server.use((req, res) => {
+  res.send("Página não encontrada! :/");
+});
 
 server.listen(process.env.PORT);
